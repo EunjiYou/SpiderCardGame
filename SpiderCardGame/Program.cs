@@ -69,10 +69,10 @@ namespace SpiderCardGame
             int recvLine = -1;
             int amount = -1;
             //보드에 카드가 남아있는 동안 
-            while (!BoardIsEmpty(board, dealer) || IsGameOver(score))
+            while (!BoardIsEmpty(board, dealer) || !IsGameOver(score))
             {
                 //보드 상태 확인(print)
-                PrintBoard(board, score);
+                PrintBoard(board, score, dealer);
                 //카드를 옮길 지, 새로 받을 지 결정
                 while (true)
                 {
@@ -196,6 +196,7 @@ namespace SpiderCardGame
                     //힌트를 줄 수 있는 상황이라면 힌트 주기
                     if (CanTransferCard(board))
                     {
+                        score.score--;
                         _state = GameState.Hint;
                     }
                     else //아닐 경우
@@ -212,23 +213,33 @@ namespace SpiderCardGame
                                     _state = GameState.NoMoreHint;
                                 }
                                 else
+                                {
                                     _state = GameState.GameOver;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
             }
 
+            PrintBoard(board, score, dealer);
             //게임이 끝나면 점수 표시
             PrintResult(board, score);
         }
 
         private static bool CanTransferCard(Board board)
         {
+            board.SetHintLines(-1, -1);
+
             for (int i = 0; i < board.boardLines.Count; i++)
             {
                 List<Card> line = board.boardLines[i];
-                if (line.Count == 0) continue;
+                if (line.Count == 0)
+                {
+                    board.SetHintLines(i + 1, -1);
+                    continue;
+                }
 
                 int amount = GetAmountFromLine(board, i + 1);
 
@@ -241,11 +252,27 @@ namespace SpiderCardGame
                     List<Card> line2 = board.boardLines[j];
                     if (line2.Count == 0) continue;
 
-                    Card card2 = line2[line2.Count - 1];
-
-                    if (card.number == card2.number - 1)
+                    if (CanConveyCard(board, i + 1, amount, j + 1))
                     {
                         board.SetHintLines(i + 1, j + 1);
+                        return true;
+                    }
+                }
+            }
+
+            if (board.hintLines[0] != -1)
+            {
+                for (int j = 0; j < board.boardLines.Count; j++)
+                {
+                    if (board.hintLines[0] == j) continue;
+
+                    List<Card> line = board.boardLines[j];
+                    int openCardCnt = GetAmountFromLine(board, j + 1);
+
+                    if (line.Count == 0 && line.Count == openCardCnt) continue;
+                    else
+                    {
+                        board.SetHintLines(j + 1, board.hintLines[0]);
                         return true;
                     }
                 }
@@ -254,6 +281,7 @@ namespace SpiderCardGame
             return false;
         }
 
+        //카드 한 셋트를 처리했을 경우의 함수
         private static void MakeOneCardSet(Score score, Board board, int recvLine)
         {
             score.cardSetCnt++;
@@ -405,7 +433,7 @@ namespace SpiderCardGame
             return true;
         }
 
-        private static void PrintBoard(Board board, Score score)
+        private static void PrintBoard(Board board, Score score, Dealer dealer)
         {
             Console.Clear(); Console.WriteLine();
 
@@ -427,8 +455,14 @@ namespace SpiderCardGame
 
             for(int i = 1; i <= board.boardLines.Count; i++)
                 Console.Write($"  {i}\t");
+            Console.WriteLine($" 남은 카드 세트 : {dealer.cards.Count / Dealer.MAX_CARD_NUMBER}");
 
-            Console.WriteLine($" 남은 카드 세트 :{Dealer.MAX_CARD_SET * Dealer.MAX_TRUMPCARD_SET - score.cardSetCnt}");
+            for (int i = 1; i <= board.boardLines.Count; i++) Console.Write("\t");
+            Console.WriteLine($" 완성한 카드 세트 :{score.cardSetCnt}");
+
+            for (int i = 1; i <= board.boardLines.Count; i++) Console.Write("\t");
+            Console.WriteLine($" 점수 : {score.score}");
+
 
             Console.WriteLine();
             switch (_state)

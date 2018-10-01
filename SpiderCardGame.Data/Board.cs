@@ -20,7 +20,7 @@ namespace SpiderCardGame.Data
             for (int i = 0; i < MAX_LINES; i++)
                 boardLines.Add(new List<Card>());
 
-            hintLines = new List<int>(2);
+            hintLines = new List<int>() {0, 0};
         }
         
         
