@@ -59,17 +59,38 @@ namespace SpiderCardGame.Data
             return cards;
         }
 
-
-        //해당 line의 카드 13장을 전부 삭제
-        public void RemoveCardSet(int line)
+        public int GetAmountFromLine(int line)
         {
-            List<Card> lineCards = boardLines[line - 1];
+            List<Card> list = boardLines[line - 1];
+            int number = list[list.Count - 1].number;
+            Card.Pattern pattern = list[list.Count - 1].Pattern_;
+            int cnt = 1;
 
-            for (int i = 0; i < Dealer.MAX_CARD_NUMBER; i++)
+            while (list.Count - cnt >= 0)
             {
-                lineCards.RemoveAt(lineCards.Count - 1);
+                if (list[list.Count - cnt].isOpened)
+                {
+                    if (list[list.Count - cnt].number != number++ ||
+                        list[list.Count - cnt].Pattern_ != pattern) return cnt - 1;
+                    cnt++;
+                }
+                else return cnt - 1;
             }
+
+            return cnt - 1;
         }
+
+
+        ////해당 line의 카드 13장을 전부 삭제
+        //public void RemoveCardSet(int line)
+        //{
+        //    List<Card> lineCards = boardLines[line - 1];
+
+        //    for (int i = 0; i < Dealer.MAX_CARD_NUMBER; i++)
+        //    {
+        //        lineCards.RemoveAt(lineCards.Count - 1);
+        //    }
+        //}
 
         public void SetHintLines(int sendLine, int recvLine)
         {

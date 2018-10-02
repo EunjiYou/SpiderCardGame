@@ -53,6 +53,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -61,6 +64,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -74,6 +78,336 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpiderCardGame.Data\SpiderCardGame.Data.csproj">
+      <Project>{0edfecc2-444a-4e8a-b53d-d808a95db832}</Project>
+      <Name>SpiderCardGame.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_7.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_8.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_10.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_12.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clover_13.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_7.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_8.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_10.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_12.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamond_13.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_7.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_8.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_10.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_12.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart_13.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_7.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_8.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_10.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_12.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spade_13.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black_joker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2_of_clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2_of_diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2_of_hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2_of_spades.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3_of_clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3_of_diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3_of_hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3_of_spades.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4_of_clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4_of_diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4_of_hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4_of_spades.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5_of_clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5_of_diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5_of_hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5_of_spades.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6_of_clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6_of_diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6_of_hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6_of_spades.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7_of_clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7_of_diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7_of_hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7_of_spades.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8_of_clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8_of_diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8_of_hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8_of_spades.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9_of_clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9_of_diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9_of_hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9_of_spades.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10_of_clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10_of_diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10_of_hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10_of_spades.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ace_of_clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ace_of_diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ace_of_hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ace_of_spades2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backcard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jack_of_clubs2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jack_of_diamonds2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jack_of_hearts2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jack_of_spades2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\king_of_clubs2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\king_of_diamonds2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\king_of_hearts2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\king_of_spades2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\queen_of_clubs2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\queen_of_diamonds2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\queen_of_hearts2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\queen_of_spades2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backcard2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backcard2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

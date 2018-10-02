@@ -120,7 +120,7 @@ namespace SpiderCardGame
 
 
                     //양의 경우 연속된 만큼만 가능하게 한다.
-                    amount = GetAmountFromLine(board, sendLine);
+                    amount = board.GetAmountFromLine(sendLine);
                     while (true)
                     {
                         Console.Write($"몇 개의 카드를 옮기시겠습니까? (최대 {amount}장 / 0:취소) ");
@@ -241,7 +241,7 @@ namespace SpiderCardGame
                     continue;
                 }
 
-                int amount = GetAmountFromLine(board, i + 1);
+                int amount = board.GetAmountFromLine(i + 1);
 
                 Card card = line[line.Count - amount];
 
@@ -267,7 +267,7 @@ namespace SpiderCardGame
                     if (board.hintLines[0] == j) continue;
 
                     List<Card> line = board.boardLines[j];
-                    int openCardCnt = GetAmountFromLine(board, j + 1);
+                    int openCardCnt = board.GetAmountFromLine(j + 1);
 
                     if (line.Count == 0 && line.Count == openCardCnt) continue;
                     else
@@ -286,7 +286,7 @@ namespace SpiderCardGame
         {
             score.cardSetCnt++;
             score.score += 100;
-            board.RemoveCardSet(recvLine);
+            board.BringCards(recvLine, Dealer.MAX_CARD_NUMBER);
 
             List<Card> list = board.boardLines[recvLine - 1];
             if (list.Count > 0)
@@ -400,26 +400,7 @@ namespace SpiderCardGame
 
         }
 
-        private static int GetAmountFromLine(Board board, int line)
-        {
-            List<Card> list = board.boardLines[line - 1];
-            int number = list[list.Count - 1].number;
-            Card.Pattern pattern = list[list.Count - 1].Pattern_;
-            int cnt = 1;
-
-            while (list.Count - cnt >= 0)
-            {
-                if (list[list.Count - cnt].isOpened)
-                {
-                    if (list[list.Count - cnt].number != number++ ||
-                        list[list.Count - cnt].Pattern_ != pattern) return cnt-1;
-                    cnt++;
-                }
-                else return cnt-1;
-            }
-
-            return cnt-1;
-        }
+        
 
         //보드와 딜러 모두 카드가 없으면 true
         private static bool BoardIsEmpty(Board board, Dealer dealer)
