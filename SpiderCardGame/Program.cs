@@ -59,8 +59,7 @@ namespace SpiderCardGame
                 case 3 : dealer.SetDifficulty(Difficulty.VerryHard); break;
             }
 
-            //List<int> list = new List<int>();
-
+            
             //난이도에 따라 딜러가 셔플
             dealer.Shuffle();
             //셔플 후 딜러가 보드에 카드 배분
@@ -184,9 +183,10 @@ namespace SpiderCardGame
                 //새로 받을 경우
                 else if (select == 2) 
                 {
-                    //딜러에게 카드가 있고 보드에 카드가 빈 줄이 하나도 없을 경우에만
+                    //딜러에게 카드가 없음
                     if (!dealer.CanPlayCard())
                         _state = GameState.DealerIsEmpty;
+                    //보드의 모든 줄 중 어느것도 비지 않음
                     else if (!board.LinesAreNotEmpty())
                         _state = GameState.BoardLineIsEmpty;
                     else
@@ -209,6 +209,7 @@ namespace SpiderCardGame
                             _state = GameState.GetNewCard;
                         else
                         {
+                            //힌트를 줄 수 없다면 게임오버
                             for (int i = 1; i <= board.boardLines.Count; i++)
                             {
                                 if (board.LineIsEmpty(i))
@@ -226,22 +227,10 @@ namespace SpiderCardGame
                 }
             }
 
+            //게임 상태 프린트
             PrintBoard(board, score, dealer);
             //게임이 끝나면 점수 표시
             PrintResult(score);
-        }
-        
-        
-        private static void PrintResult(Score score)
-        {
-            if (score.IsGameOver() || _state == GameState.GameOver)
-            {
-                Console.WriteLine("You Lose...");
-            }
-            else
-            {
-                Console.WriteLine("You Win!");
-            }
         }
         
 
@@ -270,10 +259,10 @@ namespace SpiderCardGame
             Console.WriteLine($" 남은 카드 세트 : {dealer.cards.Count / Dealer.MAX_CARD_NUMBER}");
 
             for (int i = 1; i <= board.boardLines.Count; i++) Console.Write("\t");
-            Console.WriteLine($" 완성한 카드 세트 :{score.cardSetCnt}");
+            Console.WriteLine($" 완성한 카드 세트 :{score.CardSetCount}");
 
             for (int i = 1; i <= board.boardLines.Count; i++) Console.Write("\t");
-            Console.WriteLine($" 점수 : {score.score}");
+            Console.WriteLine($" 점수 : {score.Scores}");
 
 
             Console.WriteLine();
@@ -299,6 +288,16 @@ namespace SpiderCardGame
             Console.WriteLine();
         }
 
-
+        private static void PrintResult(Score score)
+        {
+            if (score.IsGameOver() || _state == GameState.GameOver)
+            {
+                Console.WriteLine("You Lose...");
+            }
+            else
+            {
+                Console.WriteLine("You Win!");
+            }
+        }
     }
 }

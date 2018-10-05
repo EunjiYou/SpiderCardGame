@@ -16,16 +16,16 @@ namespace SpiderCardGame.Gui
     public enum GameState
     {
         None = -1,
-        WrongInput, //라인 입력 에러
-        TooManyCards, //옮기는 카드량 오버 에러
-        CantTransferCards, //교환 불가 에러
-        DealerIsEmpty,
-        BoardLineIsEmpty,
-        Hint,
-        GetNewCard,
-        NoMoreHint,
-        Win, //승리
-        GameOver //패배
+        WrongInput,         //입력값 에러
+        TooManyCards,       //옮기는 카드량 오버
+        CantTransferCards,  //교환 불가 에러
+        DealerIsEmpty,      //딜러 카드 없음
+        BoardLineIsEmpty,   //카드가 비어있는 줄이 있음
+        Hint,               //힌트 제공
+        GetNewCard,         //새카드 제공
+        NoMoreHint,         //힌트 제공 불가
+        Win,                //승리
+        GameOver            //패배
     }
     
     public partial class Form1 : Form
@@ -39,8 +39,7 @@ namespace SpiderCardGame.Gui
         Board board;
         Judge judge;
         GraphicCard graphicCard;
-        //List<List<PictureBox>> curCards = new List<List<PictureBox>>();
-        //List<Image> images;
+        
 
         int select = -1;
         int sendLine = -1;
@@ -48,8 +47,7 @@ namespace SpiderCardGame.Gui
         int amount = -1;
 
         private bool gameEnd = false;
-
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -59,8 +57,6 @@ namespace SpiderCardGame.Gui
             board = new Board(dealer);
             judge = new Judge(board, dealer);
             graphicCard = new GraphicCard(this);
-
-            //SetGameDifficulTyAndGameStart(Difficulty.Normal);
         }
 
         private void SetGameDifficulTyAndGameStart(Difficulty difficulty)
@@ -78,6 +74,7 @@ namespace SpiderCardGame.Gui
             PrintBoard(board, score, dealer);
         }
 
+        // 카드 이동
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (!gameEnd)
@@ -138,7 +135,7 @@ namespace SpiderCardGame.Gui
         }
 
 
-        //힌트 주기
+        //힌트 제공
         private void btnHint_Click(object sender, EventArgs e)
         {
             if (!gameEnd)
@@ -183,7 +180,7 @@ namespace SpiderCardGame.Gui
             }
         }
         
-        //새로 받을 경우
+        // 카드 새로받기
         private void btnNew_Click(object sender, EventArgs e)
         {
             //딜러에게 카드가 있고 보드에 카드가 빈 줄이 하나도 없을 경우에만
@@ -199,16 +196,19 @@ namespace SpiderCardGame.Gui
             PrintBoard(board, score, dealer);
         }
 
+        // 난이도 노말로 설정
         private void btnNormal_Click(object sender, EventArgs e)
         {
             SetGameDifficulTyAndGameStart(Difficulty.Normal);
         }
-
+        
+        // 난이도 어려움으로 설정
         private void btnHard_Click(object sender, EventArgs e)
         {
             SetGameDifficulTyAndGameStart(Difficulty.Hard);
         }
 
+        // 난이도 매우어려움으로 설정
         private void btnVeryHard_Click(object sender, EventArgs e)
         {
             SetGameDifficulTyAndGameStart(Difficulty.VerryHard);
@@ -249,8 +249,8 @@ namespace SpiderCardGame.Gui
                 }
             }
             
-            lblRemainCardSet.Text = $" 남은 카드 세트 : {(dealer.cards.Count / Dealer.MAX_CARD_NUMBER) - score.cardSetCnt}";
-            lblScore.Text = $" 점수 : {score.score}";
+            lblRemainCardSet.Text = $" 남은 카드 세트 : {(dealer.cards.Count / Dealer.MAX_CARD_NUMBER) - score.CardSetCount}";
+            lblScore.Text = $" 점수 : {score.Scores}";
 
             string state = "";
             switch (_state)

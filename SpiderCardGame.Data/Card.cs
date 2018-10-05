@@ -17,14 +17,14 @@ namespace SpiderCardGame.Data
             Heart,
         }
 
-        public Pattern Pattern_ { get; private set; }
-        public int number { get; private set; }
-        public bool isOpened;
+        public Pattern Pattern_ { get; private set; }   //카드 패턴
+        public int Number { get; private set; }         //카드의 숫자
+        public bool isOpened;                           //카드가 공개된 상태인지
 
         public Card(Pattern Pattern_, int number)
         {
             this.Pattern_ = Pattern_;
-            this.number = number;
+            this.Number = number;
         }
 
 
@@ -41,14 +41,14 @@ namespace SpiderCardGame.Data
                 case Pattern.Heart: sb.Append("♥"); break;
             }
 
-            switch(number)
+            switch(Number)
             {
                 case 13: sb.Append("K"); break;
                 case 12: sb.Append("Q"); break;
                 case 11: sb.Append("J"); break;
                 case 10: sb.Append("10"); break;
                 default:
-                    sb.Append("0" + number); break;
+                    sb.Append("0" + Number); break;
             }
 
             return sb.ToString();

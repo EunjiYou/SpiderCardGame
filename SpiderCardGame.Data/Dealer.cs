@@ -16,19 +16,19 @@ namespace SpiderCardGame.Data
 
     public class Dealer
     {
-        public const int MAX_TRUMPCARD_SET = 2;
-        public const int MAX_CARD_SET = 4;
-        public const int MAX_CARD_NUMBER = 13;
+        public const int MAX_TRUMPCARD_SET = 2;     //최대로 사용하는 트럼프 카드 세트의 갯수
+        public const int MAX_CARD_SET = 4;          //한 트럼프 카드 세트 당 존재하는 카드 세트 갯수
+        public const int MAX_CARD_NUMBER = 13;      //한 세트의 기준이 되는 카드 장 수
 
-        private int _index = 0;
-        
-        public Difficulty Difficulty_ = Difficulty.None;
+        private int _index = 0; //딜러의 card list에 접근하는 index
+    
+        public Difficulty Difficulty_ = Difficulty.None; //게임의 난이도
 
-        public List<Card> cards = new List<Card>();
-        int _pattern = 0;
+        public List<Card> cards = new List<Card>(); //게임에 사용할 카드들
+        private int _pattern = 0;                   //난이도에 따른 카드 배치를 위한 변수
 
 
-        //게임에 사용할 카드들을 생성 후 셔플
+        // 게임에 사용할 카드들을 생성 후 셔플
         public void Shuffle()
         {
             //트럼프카드 두 벌을 가지고 게임을 한다.
@@ -55,19 +55,19 @@ namespace SpiderCardGame.Data
             cards = cards.OrderBy(a => Guid.NewGuid()).ToList();
         }
 
-        //게임 난이도 선택
+        // 게임 난이도 선택
         public void SetDifficulty(Difficulty Difficulty_)
         {
             this.Difficulty_ = Difficulty_;
         }
 
-        //딜러에게서 카드를 가져옴
+        // 카드를 전달
         public Card PlayCard()
         {
             return cards[_index++];
         }
 
-        //딜러에게서 카드를 가져올 수 있는지의 여부 확인
+        // 딜러에게서 카드를 가져올 수 있는지의 여부 확인
         public bool CanPlayCard()
         {
             if (_index < cards.Count) return true;

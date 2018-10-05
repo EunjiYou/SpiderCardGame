@@ -12,14 +12,14 @@ namespace SpiderCardGame.Gui
 {
     public class GraphicCard
     {
-        private const int HOR_LOCATION = 50;
-        private const int VER_LOCATION = 120;
-        private const int HOR_INTERVAL = 100;
-        private const int VER_INTERVAL = 25;
+        private const int HOR_LOCATION = 50;    //가로 시작위치
+        private const int VER_LOCATION = 120;   //세로 시작위치
+        private const int HOR_INTERVAL = 100;   //한 줄 사이간 가로 간격
+        private const int VER_INTERVAL = 25;    //한 줄에서의 카드들간 세로 간격
 
-        public List<List<PictureBox>> curCards = new List<List<PictureBox>>();
-        public List<Image> images;
-        private Form1 _form1;
+        public List<List<PictureBox>> curCards = new List<List<PictureBox>>(); //winForm에 나타난 카드 이미지들
+        public List<Image> images;  //트럼프카드 리소스 데이터
+        private Form1 _form1;       //winForm
 
 
         public GraphicCard(Form1 form1)
@@ -30,38 +30,12 @@ namespace SpiderCardGame.Gui
             {
                 curCards.Add(new List<PictureBox>());
             }
+
             DefineCardImageFiles();
         }
 
-        public Image FindImage(Card card)
-        {
-            int index = images.Count - 1;
-            if (card.isOpened)
-                index = ((int)card.Pattern_ * 13) + card.number - 1;
-            return images[index];
-        }
-
-        public void RemovePictureBox(Board board, int line, int amount)
-        {
-            List<PictureBox> cards = curCards[line - 1];
-            List<PictureBox> removeCards = GetPictureBoxes(board, line, amount);
-
-            foreach (var card in removeCards)
-            {
-                _form1.Controls.Remove(card);
-                cards.Remove(card);
-            }
-        }
-
-        public List<PictureBox> GetPictureBoxes(Board board, int line, int amount)
-        {
-            List<PictureBox> list = curCards[line - 1];
-
-            var pictures = list.Skip(list.Count - amount).Take(amount);
-
-            return pictures.ToList();
-        }
-
+        
+        // picturebox를 생성
         public void MakePictureBox(Board board, int line, int amount = 1, int width = 77, int height = 110)
         {
             for (int i = 0; i < amount; i++)
@@ -101,6 +75,39 @@ namespace SpiderCardGame.Gui
             //};
         }
 
+        // picturebox 객체를 삭제
+        public void RemovePictureBox(Board board, int line, int amount)
+        {
+            List<PictureBox> cards = curCards[line - 1];
+            List<PictureBox> removeCards = GetPictureBoxes(board, line, amount);
+
+            foreach (var card in removeCards)
+            {
+                _form1.Controls.Remove(card);
+                cards.Remove(card);
+            }
+        }
+
+        // 해당 line의 amount만큼의 카드에 대응되는 picturebox를 반환
+        public List<PictureBox> GetPictureBoxes(Board board, int line, int amount)
+        {
+            List<PictureBox> list = curCards[line - 1];
+
+            var pictures = list.Skip(list.Count - amount).Take(amount);
+
+            return pictures.ToList();
+        }
+
+        // 카드의 문양, 숫자에 따라 그에 맞는 리소스 이미지를 반환
+        public Image FindImage(Card card)
+        {
+            int index = images.Count - 1;
+            if (card.isOpened)
+                index = ((int)card.Pattern_ * 13) + card.Number - 1;
+            return images[index];
+        }
+        
+        // 카드 리소스 이미지들을 배열에 추가
         void DefineCardImageFiles()
         {
             images = new List<Image>() { Resources.ace_of_spades2,Resources._2_of_spades, Resources._3_of_spades, Resources._4_of_spades, Resources._5_of_spades, Resources._6_of_spades, Resources._7_of_spades, Resources._8_of_spades, Resources._9_of_spades, Resources._10_of_spades, Resources.jack_of_spades2, Resources.queen_of_spades2, Resources.king_of_spades2,

@@ -8,8 +8,8 @@ namespace SpiderCardGame.Data
 {
     public class Judge
     {
-        Board _board;
-        Dealer _dealer;
+        private Board _board;
+        private Dealer _dealer;
 
         public Judge(Board board, Dealer dealer)
         {
@@ -18,23 +18,7 @@ namespace SpiderCardGame.Data
         }
 
 
-        public bool LineHasCardSet(int recvLine)
-        {
-            List<Card> list = _board.boardLines[recvLine - 1];
-            int number = list[list.Count - 1].number;
-            Card.Pattern pattern = list[list.Count - 1].Pattern_;
-
-            if (list.Count - Dealer.MAX_CARD_NUMBER < 0) return false;
-
-            for (int i = 1; i <= Dealer.MAX_CARD_NUMBER; i++)
-            {
-                if (list[list.Count - i].number != i || !list[list.Count - i].isOpened ||
-                    list[list.Count - i].Pattern_ != pattern) return false;
-            }
-
-            return true;
-        }
-
+        // line에서 line으로 amount만큼 카드 전달이 가능한지 판단
         public bool CanConveyCard(int sendLine, int amount, int recvLine)
         {
             List<Card> sendLineList = _board.boardLines[sendLine - 1];
@@ -42,11 +26,12 @@ namespace SpiderCardGame.Data
 
             if (recvLineList.Count == 0) return true;
 
-            return sendLineList[sendLineList.Count - amount].number + 1
-                   == recvLineList[recvLineList.Count - 1].number ? true : false;
+            return sendLineList[sendLineList.Count - amount].Number + 1
+                   == recvLineList[recvLineList.Count - 1].Number ? true : false;
 
         }
 
+        // 힌트를 줄 수 있는지 판단
         public bool CanGiveHint()
         {
             _board.SetHintLines(-1, -1);
@@ -97,7 +82,25 @@ namespace SpiderCardGame.Data
             return false;
         }
 
-        //보드와 딜러 모두 카드가 없으면 true
+        // line에 13장 카드세트가 다 모였는지 판단
+        public bool LineHasCardSet(int recvLine)
+        {
+            List<Card> list = _board.boardLines[recvLine - 1];
+            int number = list[list.Count - 1].Number;
+            Card.Pattern pattern = list[list.Count - 1].Pattern_;
+
+            if (list.Count - Dealer.MAX_CARD_NUMBER < 0) return false;
+
+            for (int i = 1; i <= Dealer.MAX_CARD_NUMBER; i++)
+            {
+                if (list[list.Count - i].Number != i || !list[list.Count - i].isOpened ||
+                    list[list.Count - i].Pattern_ != pattern) return false;
+            }
+
+            return true;
+        }
+
+        // 모든 카드들이 완성되었는지 판단
         public bool BoardIsEmpty()
         {
             if (_dealer.CanPlayCard()) return false;
