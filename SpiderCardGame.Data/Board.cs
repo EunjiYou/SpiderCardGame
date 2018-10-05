@@ -13,8 +13,11 @@ namespace SpiderCardGame.Data
         public List<List<Card>> boardLines;
         public List<int> hintLines;
 
-        public Board()
+        private Dealer _dealer;
+
+        public Board(Dealer dealer)
         {
+            _dealer = dealer;
             boardLines = new List<List<Card>>();
 
             for (int i = 0; i < MAX_LINES; i++)
@@ -22,24 +25,14 @@ namespace SpiderCardGame.Data
 
             hintLines = new List<int>() {0, 0};
         }
-        
-        
+
+
         //해당 line으로 카드를 받음
         public void TakeCard(int line, Card card)
         {
             boardLines[line - 1].Add(card);
         }
 
-        //해당 line으로 카드를 받음
-        public void TakeCards(int line, List<Card> cards)
-        {
-            foreach(Card card in cards)
-            {
-                boardLines[line - 1].Add(card);
-            }
-        }
-
-        
         //카드리스트를 빼냄
         public List<Card> BringCards(int line, int amount)
         {
@@ -51,11 +44,8 @@ namespace SpiderCardGame.Data
                 cards.Add(list[list.Count - i]);
             }
 
-            foreach(Card card in cards)
-            {
-                list.Remove(card);
-            }
-
+            list.RemoveAll(x => cards.Contains(x));
+            
             return cards;
         }
 
@@ -81,18 +71,7 @@ namespace SpiderCardGame.Data
 
             return cnt - 1;
         }
-
-
-        ////해당 line의 카드 13장을 전부 삭제
-        //public void RemoveCardSet(int line)
-        //{
-        //    List<Card> lineCards = boardLines[line - 1];
-
-        //    for (int i = 0; i < Dealer.MAX_CARD_NUMBER; i++)
-        //    {
-        //        lineCards.RemoveAt(lineCards.Count - 1);
-        //    }
-        //}
+        
 
         public void SetHintLines(int sendLine, int recvLine)
         {
@@ -103,15 +82,81 @@ namespace SpiderCardGame.Data
         // 제일 많은 카드를 가지고 있는 라인의 카드양을 반환
         public int GetMaxCardsLine()
         {
-            int max = 0;
+            List<int> maxCardline = (from x in boardLines
+                orderby x.Count descending
+                select x.Count).Take(1).ToList();
+            
+            return maxCardline[0];
+        }
 
-            foreach(List<Card> list in boardLines)
+        //sendline에서 receive라인으로 amount만큼 카드가 이동
+        public void ConveyCardLineToLine(int sendLine, int amount, int recvLine)
+        {
+            List<Card> cards = BringCards(sendLine, amount);
+            foreach (Card card in cards)
             {
-                if (list.Count > max)
-                    max = list.Count;
+                TakeCard(recvLine, card);
             }
 
-            return max;
+            //이동 후 새 카드가 보이도록 설정
+            List<Card> list = boardLines[sendLine - 1];
+            if (list.Count > 0)
+                list[list.Count - 1].isOpened = true;
+        }
+
+        public bool LineIsEmpty(int line)
+        {
+            if (boardLines[line - 1].Count == 0) return true;
+            return false;
+        }
+
+        //LineIsNotEmpty를 활용할 수도 있지만 foreach문을 활용
+        public bool LinesAreNotEmpty()
+        {
+            for (int i = 0; i < MAX_LINES; i++)
+            {
+                if (boardLines[i].Count == 0) return false;
+            }
+
+            return true;
+        }
+
+        public void InitBoard()
+        {
+            for (int i = 0; i < 5; i++)
+                ConveyCardToAllLine(false);
+
+            for (int i = 1; i <= 4; i++)
+            {
+                Card card = _dealer.PlayCard();
+                TakeCard(i, card);
+            }
+
+            foreach (List<Card> list in boardLines)
+            {
+                list[list.Count - 1].isOpened = true;
+            }
+        }
+
+        //딜러로부터 카드 새로 받아오기
+        public void ConveyCardToAllLine(bool isOpened = true)
+        {
+            for (int i = 1; i <= boardLines.Count; i++)
+            {
+                Card card = _dealer.PlayCard();
+                card.isOpened = isOpened;
+                TakeCard(i, card);
+            }
+        }
+
+        //카드 한 셋트를 처리했을 경우의 함수
+        public void RemoveOneCardSet(int recvLine)
+        {
+            BringCards(recvLine, Dealer.MAX_CARD_NUMBER);
+
+            List<Card> list = boardLines[recvLine - 1];
+            if (list.Count > 0)
+                list[list.Count - 1].isOpened = true;
         }
     }
 }

@@ -31,8 +31,14 @@ namespace SpiderCardGame.Data
 
         public void GiveOneCardSetScore()
         {
-            score.cardSetCnt++;
-            score.score += 100;
+            cardSetCnt++;
+            score += 100;
+        }
+
+        public bool IsGameOver()
+        {
+            if (score <= 0) return true;
+            return false;
         }
     }
 }

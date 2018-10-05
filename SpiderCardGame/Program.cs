@@ -29,7 +29,9 @@ namespace SpiderCardGame
             
             Dealer dealer = new Dealer();
             Score score = new Score();
-            Board board = new Board();
+            Board board = new Board(dealer);
+            Judge judge = new Judge(board, dealer);
+
 
             //게임 난이도 선택
             int difficulty = -1;
@@ -62,7 +64,7 @@ namespace SpiderCardGame
             //난이도에 따라 딜러가 셔플
             dealer.Shuffle();
             //셔플 후 딜러가 보드에 카드 배분
-            ConveyCardToFirst(dealer, board);
+            board.InitBoard();
 
 
             int select = -1;
@@ -70,7 +72,7 @@ namespace SpiderCardGame
             int recvLine = -1;
             int amount = -1;
             //보드에 카드가 남아있는 동안 
-            while (!BoardIsEmpty(board, dealer) || !IsGameOver(score))
+            while (!judge.BoardIsEmpty() || !score.IsGameOver())
             {
                 //보드 상태 확인(print)
                 PrintBoard(board, score, dealer);
@@ -111,7 +113,7 @@ namespace SpiderCardGame
                         
                         if (sendLine >= 0 && sendLine <= 10)
                         {
-                            if (sendLine == 0 || !LineIsEmpty(board, sendLine)) break;
+                            if (sendLine == 0 || !board.LineIsEmpty(sendLine)) break;
                             else Console.WriteLine("이 라인에는 카드가 없습니다.");
                         }
                         else Console.WriteLine("잘못된 입력입니다.");
@@ -160,7 +162,7 @@ namespace SpiderCardGame
                         else if (recvLine >= 0 && recvLine <= 10)
                         {
                             //받을 라인의 카드와 내가 보낼 카드가 연속될 수 있는가 확인
-                            if(recvLine == 0 || CanConveyCard(board, sendLine, select, recvLine)) break;
+                            if(recvLine == 0 || judge.CanConveyCard(sendLine, select, recvLine)) break;
                             else Console.WriteLine("이 라인으로는 옮길 수 없습니다.");
                         }
                         else Console.WriteLine("잘못된 입력입니다.");
@@ -168,14 +170,15 @@ namespace SpiderCardGame
                     if (recvLine == 0) continue;
 
                     //카드 옮기기
-                    ConveyCardLineToLine(board, sendLine, select, recvLine);
+                    board.ConveyCardLineToLine(sendLine, select, recvLine);
 
                     //옮긴 후 움직임 수 증가 및 스코어 1 감소
                     score.GiveMovePenalty();
                     //카드 한 세트가 완성되면
-                    if(LineHasCardSet(board, recvLine))
+                    if(judge.LineHasCardSet(recvLine))
                     {
-                        MakeOneCardSet(score, board, recvLine);
+                        board.RemoveOneCardSet(recvLine);
+                        score.GiveOneCardSetScore();
                     }
                 }
                 //새로 받을 경우
@@ -184,17 +187,17 @@ namespace SpiderCardGame
                     //딜러에게 카드가 있고 보드에 카드가 빈 줄이 하나도 없을 경우에만
                     if (!dealer.CanPlayCard())
                         _state = GameState.DealerIsEmpty;
-                    else if (!LinesAreNotEmpty(board))
+                    else if (!board.LinesAreNotEmpty())
                         _state = GameState.BoardLineIsEmpty;
                     else
                         //보드의 모든 줄에 카드 열 장씩 배부
-                        ConveyCardToAllLine(dealer, board);     
+                        board.ConveyCardToAllLine();     
                 }
                 //힌트를 줘야하는 경우
                 else
                 {
                     //힌트를 줄 수 있는 상황이라면 힌트 주기
-                    if (CanTransferCard(board))
+                    if (judge.CanGiveHint())
                     {
                         score.GiveHintPenalty();
                         _state = GameState.Hint;
@@ -208,7 +211,7 @@ namespace SpiderCardGame
                         {
                             for (int i = 1; i <= board.boardLines.Count; i++)
                             {
-                                if (LineIsEmpty(board, i))
+                                if (board.LineIsEmpty(i))
                                 {
                                     _state = GameState.NoMoreHint;
                                 }
@@ -225,193 +228,22 @@ namespace SpiderCardGame
 
             PrintBoard(board, score, dealer);
             //게임이 끝나면 점수 표시
-            PrintResult(board, score);
+            PrintResult(score);
         }
-
-        private static bool CanTransferCard(Board board)
+        
+        
+        private static void PrintResult(Score score)
         {
-            board.SetHintLines(-1, -1);
-
-            for (int i = 0; i < board.boardLines.Count; i++)
-            {
-                List<Card> line = board.boardLines[i];
-                if (line.Count == 0)
-                {
-                    board.SetHintLines(i + 1, -1);
-                    continue;
-                }
-
-                int amount = board.GetCardChainAmountFromLine(i + 1);
-
-                Card card = line[line.Count - amount];
-
-                for (int j = 0; j < board.boardLines.Count; j++)
-                {
-                    if (i == j) continue;
-
-                    List<Card> line2 = board.boardLines[j];
-                    if (line2.Count == 0) continue;
-
-                    if (CanConveyCard(board, i + 1, amount, j + 1))
-                    {
-                        board.SetHintLines(i + 1, j + 1);
-                        return true;
-                    }
-                }
-            }
-
-            if (board.hintLines[0] != -1)
-            {
-                for (int j = 0; j < board.boardLines.Count; j++)
-                {
-                    if (board.hintLines[0] == j) continue;
-
-                    List<Card> line = board.boardLines[j];
-                    int openCardCnt = board.GetCardChainAmountFromLine(j + 1);
-
-                    if (line.Count == 0 && line.Count == openCardCnt) continue;
-                    else
-                    {
-                        board.SetHintLines(j + 1, board.hintLines[0]);
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        //카드 한 셋트를 처리했을 경우의 함수
-        private static void MakeOneCardSet(Score score, Board board, int recvLine)
-        {
-            score.GiveOneCardSetScore();
-            board.BringCards(recvLine, Dealer.MAX_CARD_NUMBER);
-
-            List<Card> list = board.boardLines[recvLine - 1];
-            if (list.Count > 0)
-                list[list.Count - 1].isOpened = true;
-        }
-
-        //sendline에서 receive라인으로 amount만큼 카드가 이동
-        private static void ConveyCardLineToLine(Board board, int sendLine, int amount, int recvLine)
-        {
-            List<Card> cards = board.BringCards(sendLine, amount);
-            board.TakeCards(recvLine, cards);
-
-            //이동 후 새 카드가 보이도록 설정
-            List<Card> list = board.boardLines[sendLine - 1];
-            if(list.Count > 0)
-                list[list.Count - 1].isOpened = true;
-        }
-
-        private static void ConveyCardToFirst(Dealer dealer, Board board)
-        {
-            for (int i = 0; i < 5; i++)
-                ConveyCardToAllLine(dealer, board, false);
-
-            for (int i = 1; i <= 4; i++)
-            {
-                Card card = dealer.PlayCard();
-                board.TakeCard(i, card);
-            }
-
-            foreach (List<Card> list in board.boardLines)
-            {
-                list[list.Count - 1].isOpened = true;
-            }
-        }
-
-        private static bool LineIsEmpty(Board board, int line)
-        {
-            List<Card> list = board.boardLines[line - 1];
-            if (list.Count == 0) return true;
-            return false;
-        }
-
-        //LineIsNotEmpty를 활용할 수도 있지만 foreach문을 활용
-        private static bool LinesAreNotEmpty(Board board)
-        {
-            foreach(List<Card> list in board.boardLines)
-            {
-                if (list.Count == 0) return false;
-            }
-
-            return true;
-        }
-
-        //딜러로부터 카드 새로 받아오기
-        private static void ConveyCardToAllLine(Dealer dealer, Board board, bool isOpened = true)
-        {
-            for(int i = 1; i <= board.boardLines.Count; i++)
-            {
-                Card card = dealer.PlayCard();
-                card.isOpened = isOpened;
-                board.TakeCard(i, card);
-            }
-        }
-
-        private static void PrintResult(Board board, Score score)
-        {
-            //이겼을 경우 스코어 표시 You Win
-            if (!IsGameOver(score))
-            {
-                Console.WriteLine("You Win!");
-            }
-            else //졌을 경우 You Lose
+            if (score.IsGameOver() || _state == GameState.GameOver)
             {
                 Console.WriteLine("You Lose...");
             }
-        }
-
-        private static bool IsGameOver(Score score)
-        {
-            if (_state == GameState.GameOver || score.score <= 0) return true;
-            return false;
+            else
+            {
+                Console.WriteLine("You Win!");
+            }
         }
         
-    
-        private static bool LineHasCardSet(Board board, int recvLine)
-        {
-            List<Card> list = board.boardLines[recvLine - 1];
-            int number = list[list.Count - 1].number;
-            Card.Pattern pattern = list[list.Count - 1].Pattern_;
-            
-            if (list.Count - Dealer.MAX_CARD_NUMBER < 0) return false;
-
-            for (int i = 1; i <= Dealer.MAX_CARD_NUMBER; i++)
-            {
-                if (list[list.Count - i].number != i || !list[list.Count - i].isOpened || 
-                    list[list.Count - i].Pattern_ != pattern) return false;
-            }
-
-            return true;
-        }
-
-        private static bool CanConveyCard(Board board, int sendLine, int amount, int recvLine)
-        {
-            List<Card> sendLineList = board.boardLines[sendLine - 1];
-            List<Card> recvLineList = board.boardLines[recvLine - 1];
-
-            if (recvLineList.Count == 0) return true;
-
-            return sendLineList[sendLineList.Count - amount].number + 1 
-                == recvLineList[recvLineList.Count - 1].number? true : false;
-
-        }
-
-        
-
-        //보드와 딜러 모두 카드가 없으면 true
-        private static bool BoardIsEmpty(Board board, Dealer dealer)
-        {
-            if (dealer.CanPlayCard()) return false;
-            foreach(List<Card> list in board.boardLines)
-            {
-                if (list.Count != 0) return false;
-            }
-
-            return true;
-        }
 
         private static void PrintBoard(Board board, Score score, Dealer dealer)
         {

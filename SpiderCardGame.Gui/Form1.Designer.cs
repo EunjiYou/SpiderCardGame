@@ -49,7 +49,7 @@
             this.pictureBox71 = new System.Windows.Forms.PictureBox();
             this.pictureBox81 = new System.Windows.Forms.PictureBox();
             this.pictureBox91 = new System.Windows.Forms.PictureBox();
-            this.pictureBox92 = new System.Windows.Forms.PictureBox();
+            this.pbxDealer = new System.Windows.Forms.PictureBox();
             this.lblState = new System.Windows.Forms.Label();
             this.btnNew = new System.Windows.Forms.Button();
             this.lblLineNumber = new System.Windows.Forms.Label();
@@ -70,7 +70,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox71)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox81)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox91)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox92)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxDealer)).BeginInit();
             this.difficultyPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -308,17 +308,17 @@
             this.pictureBox91.TabStop = false;
             this.pictureBox91.Visible = false;
             // 
-            // pictureBox92
+            // pbxDealer
             // 
-            this.pictureBox92.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.pictureBox92.Image = global::SpiderCardGame.Gui.Properties.Resources.backcard;
-            this.pictureBox92.InitialImage = null;
-            this.pictureBox92.Location = new System.Drawing.Point(1170, 574);
-            this.pictureBox92.Name = "pictureBox92";
-            this.pictureBox92.Size = new System.Drawing.Size(90, 130);
-            this.pictureBox92.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox92.TabIndex = 123;
-            this.pictureBox92.TabStop = false;
+            this.pbxDealer.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.pbxDealer.Image = global::SpiderCardGame.Gui.Properties.Resources.backcard;
+            this.pbxDealer.InitialImage = null;
+            this.pbxDealer.Location = new System.Drawing.Point(1170, 574);
+            this.pbxDealer.Name = "pbxDealer";
+            this.pbxDealer.Size = new System.Drawing.Size(90, 130);
+            this.pbxDealer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbxDealer.TabIndex = 123;
+            this.pbxDealer.TabStop = false;
             // 
             // lblState
             // 
@@ -379,9 +379,10 @@
             this.difficultyPanel.Controls.Add(this.btnVeryHard);
             this.difficultyPanel.Controls.Add(this.btnHard);
             this.difficultyPanel.Controls.Add(this.btnNormal);
-            this.difficultyPanel.Location = new System.Drawing.Point(368, 240);
+            this.difficultyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.difficultyPanel.Location = new System.Drawing.Point(0, 0);
             this.difficultyPanel.Name = "difficultyPanel";
-            this.difficultyPanel.Size = new System.Drawing.Size(607, 335);
+            this.difficultyPanel.Size = new System.Drawing.Size(1282, 723);
             this.difficultyPanel.TabIndex = 137;
             this.difficultyPanel.UseWaitCursor = true;
             // 
@@ -443,7 +444,7 @@
             this.Controls.Add(this.lblLineNumber2);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.lblState);
-            this.Controls.Add(this.pictureBox92);
+            this.Controls.Add(this.pbxDealer);
             this.Controls.Add(this.pictureBox91);
             this.Controls.Add(this.pictureBox81);
             this.Controls.Add(this.pictureBox71);
@@ -476,7 +477,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox71)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox81)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox91)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox92)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxDealer)).EndInit();
             this.difficultyPanel.ResumeLayout(false);
             this.difficultyPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -506,7 +507,7 @@
         private System.Windows.Forms.PictureBox pictureBox71;
         private System.Windows.Forms.PictureBox pictureBox81;
         private System.Windows.Forms.PictureBox pictureBox91;
-        private System.Windows.Forms.PictureBox pictureBox92;
+        private System.Windows.Forms.PictureBox pbxDealer;
         private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Label lblLineNumber;
