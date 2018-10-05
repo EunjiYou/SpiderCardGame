@@ -25,7 +25,7 @@ namespace SpiderCardGame.Data
         public Difficulty Difficulty_ = Difficulty.None;
 
         public List<Card> cards = new List<Card>();
-        int _pattern = 1;
+        int _pattern = 0;
 
 
         //게임에 사용할 카드들을 생성 후 셔플
@@ -44,9 +44,9 @@ namespace SpiderCardGame.Data
                         cards.Add(card);
                     }
 
-                    if (_pattern == (int)Difficulty_)
+                    if (_pattern == (int)Difficulty_ - 1)
                     {
-                        _pattern = 1;
+                        _pattern = 0;
                     }
                     else _pattern++;
                 }

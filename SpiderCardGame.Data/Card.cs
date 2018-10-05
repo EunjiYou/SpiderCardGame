@@ -10,7 +10,7 @@ namespace SpiderCardGame.Data
     {
         public enum Pattern
         {
-            None = 0,
+            None = -1,
             Spade,
             Clover,
             Diamond,

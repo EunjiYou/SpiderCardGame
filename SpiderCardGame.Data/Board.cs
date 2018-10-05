@@ -59,9 +59,11 @@ namespace SpiderCardGame.Data
             return cards;
         }
 
-        public int GetAmountFromLine(int line)
+        public int GetCardChainAmountFromLine(int line)
         {
             List<Card> list = boardLines[line - 1];
+            if (list.Count == 0) return 0;
+
             int number = list[list.Count - 1].number;
             Card.Pattern pattern = list[list.Count - 1].Pattern_;
             int cnt = 1;

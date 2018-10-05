@@ -56,7 +56,7 @@ namespace SpiderCardGame
                 case 3 : dealer.SetDifficulty(Difficulty.VerryHard); break;
             }
 
-            List<int> list = new List<int>();
+            //List<int> list = new List<int>();
 
             //난이도에 따라 딜러가 셔플
             dealer.Shuffle();
@@ -120,7 +120,7 @@ namespace SpiderCardGame
 
 
                     //양의 경우 연속된 만큼만 가능하게 한다.
-                    amount = board.GetAmountFromLine(sendLine);
+                    amount = board.GetCardChainAmountFromLine(sendLine);
                     while (true)
                     {
                         Console.Write($"몇 개의 카드를 옮기시겠습니까? (최대 {amount}장 / 0:취소) ");
@@ -241,7 +241,7 @@ namespace SpiderCardGame
                     continue;
                 }
 
-                int amount = board.GetAmountFromLine(i + 1);
+                int amount = board.GetCardChainAmountFromLine(i + 1);
 
                 Card card = line[line.Count - amount];
 
@@ -267,7 +267,7 @@ namespace SpiderCardGame
                     if (board.hintLines[0] == j) continue;
 
                     List<Card> line = board.boardLines[j];
-                    int openCardCnt = board.GetAmountFromLine(j + 1);
+                    int openCardCnt = board.GetCardChainAmountFromLine(j + 1);
 
                     if (line.Count == 0 && line.Count == openCardCnt) continue;
                     else
@@ -316,9 +316,8 @@ namespace SpiderCardGame
                 board.TakeCard(i, card);
             }
 
-            for (int i = 0; i < board.boardLines.Count; i++)
+            foreach (List<Card> list in board.boardLines)
             {
-                List<Card> list = board.boardLines[i];
                 list[list.Count - 1].isOpened = true;
             }
         }
@@ -371,6 +370,7 @@ namespace SpiderCardGame
             return false;
         }
         
+    
         private static bool LineHasCardSet(Board board, int recvLine)
         {
             List<Card> list = board.boardLines[recvLine - 1];
