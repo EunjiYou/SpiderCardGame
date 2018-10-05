@@ -17,5 +17,22 @@ namespace SpiderCardGame.Data
             cardSetCnt = 0;
             score = 500;
         }
+
+        public void GiveMovePenalty()
+        {
+            score--;
+            moveCnt++;
+        }
+
+        public void GiveHintPenalty()
+        {
+            score--;
+        }
+
+        public void GiveOneCardSetScore()
+        {
+            score.cardSetCnt++;
+            score.score += 100;
+        }
     }
 }

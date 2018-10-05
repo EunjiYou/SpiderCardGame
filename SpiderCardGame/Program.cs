@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using SpiderCardGame.Data;
 
 namespace SpiderCardGame
@@ -170,8 +171,7 @@ namespace SpiderCardGame
                     ConveyCardLineToLine(board, sendLine, select, recvLine);
 
                     //옮긴 후 움직임 수 증가 및 스코어 1 감소
-                    score.moveCnt++;
-                    score.score--;
+                    score.GiveMovePenalty();
                     //카드 한 세트가 완성되면
                     if(LineHasCardSet(board, recvLine))
                     {
@@ -196,7 +196,7 @@ namespace SpiderCardGame
                     //힌트를 줄 수 있는 상황이라면 힌트 주기
                     if (CanTransferCard(board))
                     {
-                        score.score--;
+                        score.GiveHintPenalty();
                         _state = GameState.Hint;
                     }
                     else //아닐 경우
@@ -284,8 +284,7 @@ namespace SpiderCardGame
         //카드 한 셋트를 처리했을 경우의 함수
         private static void MakeOneCardSet(Score score, Board board, int recvLine)
         {
-            score.cardSetCnt++;
-            score.score += 100;
+            score.GiveOneCardSetScore();
             board.BringCards(recvLine, Dealer.MAX_CARD_NUMBER);
 
             List<Card> list = board.boardLines[recvLine - 1];
