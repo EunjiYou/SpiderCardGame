@@ -30,16 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.imgCard1 = new System.Windows.Forms.PictureBox();
-            this.btnOK = new System.Windows.Forms.Button();
             this.btnHint = new System.Windows.Forms.Button();
             this.lblDifficulty = new System.Windows.Forms.Label();
             this.lblScore = new System.Windows.Forms.Label();
             this.lblRemainCardSet = new System.Windows.Forms.Label();
-            this.txtSendLine = new System.Windows.Forms.TextBox();
-            this.txtAmount = new System.Windows.Forms.TextBox();
-            this.txtRecvLine = new System.Windows.Forms.TextBox();
-            this.label = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.pictureBox21 = new System.Windows.Forms.PictureBox();
             this.pictureBox31 = new System.Windows.Forms.PictureBox();
@@ -49,17 +43,14 @@
             this.pictureBox71 = new System.Windows.Forms.PictureBox();
             this.pictureBox81 = new System.Windows.Forms.PictureBox();
             this.pictureBox91 = new System.Windows.Forms.PictureBox();
-            this.pbxDealer = new System.Windows.Forms.PictureBox();
+            this.pbxNewCard = new System.Windows.Forms.PictureBox();
             this.lblState = new System.Windows.Forms.Label();
-            this.btnNew = new System.Windows.Forms.Button();
-            this.lblLineNumber = new System.Windows.Forms.Label();
-            this.lblLineNumber2 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.difficultyPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.btnVeryHard = new System.Windows.Forms.Button();
             this.btnHard = new System.Windows.Forms.Button();
             this.btnNormal = new System.Windows.Forms.Button();
+            this.lblResult = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.imgCard1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).BeginInit();
@@ -70,7 +61,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox71)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox81)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox91)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxDealer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxNewCard)).BeginInit();
             this.difficultyPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,20 +80,9 @@
             this.imgCard1.TabStop = false;
             this.imgCard1.Visible = false;
             // 
-            // btnOK
-            // 
-            this.btnOK.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnOK.Location = new System.Drawing.Point(939, 27);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(100, 40);
-            this.btnOK.TabIndex = 2;
-            this.btnOK.Text = "실행";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
             // btnHint
             // 
-            this.btnHint.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnHint.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnHint.Location = new System.Drawing.Point(1053, 27);
             this.btnHint.Name = "btnHint";
             this.btnHint.Size = new System.Drawing.Size(100, 40);
@@ -114,10 +94,10 @@
             // lblDifficulty
             // 
             this.lblDifficulty.AutoSize = true;
-            this.lblDifficulty.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblDifficulty.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblDifficulty.Location = new System.Drawing.Point(977, 657);
             this.lblDifficulty.Name = "lblDifficulty";
-            this.lblDifficulty.Size = new System.Drawing.Size(176, 22);
+            this.lblDifficulty.Size = new System.Drawing.Size(157, 25);
             this.lblDifficulty.TabIndex = 4;
             this.lblDifficulty.Text = "난이도 : 매우 어려움";
             this.lblDifficulty.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -125,10 +105,10 @@
             // lblScore
             // 
             this.lblScore.AutoSize = true;
-            this.lblScore.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblScore.Location = new System.Drawing.Point(28, 35);
             this.lblScore.Name = "lblScore";
-            this.lblScore.Size = new System.Drawing.Size(155, 31);
+            this.lblScore.Size = new System.Drawing.Size(150, 32);
             this.lblScore.TabIndex = 5;
             this.lblScore.Text = "점수 : 1000";
             this.lblScore.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -136,60 +116,13 @@
             // lblRemainCardSet
             // 
             this.lblRemainCardSet.AutoSize = true;
-            this.lblRemainCardSet.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblRemainCardSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblRemainCardSet.Location = new System.Drawing.Point(30, 650);
             this.lblRemainCardSet.Name = "lblRemainCardSet";
-            this.lblRemainCardSet.Size = new System.Drawing.Size(120, 18);
+            this.lblRemainCardSet.Size = new System.Drawing.Size(111, 20);
             this.lblRemainCardSet.TabIndex = 6;
             this.lblRemainCardSet.Text = "남은 카드 세트 : ";
             this.lblRemainCardSet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtSendLine
-            // 
-            this.txtSendLine.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtSendLine.Location = new System.Drawing.Point(392, 27);
-            this.txtSendLine.Name = "txtSendLine";
-            this.txtSendLine.Size = new System.Drawing.Size(50, 45);
-            this.txtSendLine.TabIndex = 8;
-            this.txtSendLine.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txtAmount
-            // 
-            this.txtAmount.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtAmount.Location = new System.Drawing.Point(576, 27);
-            this.txtAmount.Name = "txtAmount";
-            this.txtAmount.Size = new System.Drawing.Size(50, 45);
-            this.txtAmount.TabIndex = 9;
-            this.txtAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txtRecvLine
-            // 
-            this.txtRecvLine.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtRecvLine.Location = new System.Drawing.Point(832, 27);
-            this.txtRecvLine.Name = "txtRecvLine";
-            this.txtRecvLine.Size = new System.Drawing.Size(50, 45);
-            this.txtRecvLine.TabIndex = 10;
-            this.txtRecvLine.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label
-            // 
-            this.label.AutoSize = true;
-            this.label.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label.Location = new System.Drawing.Point(286, 31);
-            this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(100, 36);
-            this.label.TabIndex = 11;
-            this.label.Text = "From";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label2.Location = new System.Drawing.Point(632, 31);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(188, 36);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "card(s)   To";
             // 
             // pictureBox11
             // 
@@ -308,70 +241,30 @@
             this.pictureBox91.TabStop = false;
             this.pictureBox91.Visible = false;
             // 
-            // pbxDealer
+            // pbxNewCard
             // 
-            this.pbxDealer.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.pbxDealer.Image = global::SpiderCardGame.Gui.Properties.Resources.backcard;
-            this.pbxDealer.InitialImage = null;
-            this.pbxDealer.Location = new System.Drawing.Point(1170, 574);
-            this.pbxDealer.Name = "pbxDealer";
-            this.pbxDealer.Size = new System.Drawing.Size(90, 130);
-            this.pbxDealer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbxDealer.TabIndex = 123;
-            this.pbxDealer.TabStop = false;
+            this.pbxNewCard.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.pbxNewCard.Image = global::SpiderCardGame.Gui.Properties.Resources.backcard;
+            this.pbxNewCard.InitialImage = null;
+            this.pbxNewCard.Location = new System.Drawing.Point(1170, 574);
+            this.pbxNewCard.Name = "pbxNewCard";
+            this.pbxNewCard.Size = new System.Drawing.Size(90, 130);
+            this.pbxNewCard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbxNewCard.TabIndex = 123;
+            this.pbxNewCard.TabStop = false;
+            this.pbxNewCard.Click += new System.EventHandler(this.pbxNewCard_Click);
             // 
             // lblState
             // 
             this.lblState.AutoSize = true;
-            this.lblState.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblState.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblState.Location = new System.Drawing.Point(281, 650);
             this.lblState.Name = "lblState";
             this.lblState.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblState.Size = new System.Drawing.Size(18, 26);
+            this.lblState.Size = new System.Drawing.Size(20, 29);
             this.lblState.TabIndex = 130;
             this.lblState.Text = " ";
             this.lblState.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // btnNew
-            // 
-            this.btnNew.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnNew.Location = new System.Drawing.Point(1170, 27);
-            this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(100, 40);
-            this.btnNew.TabIndex = 131;
-            this.btnNew.Text = "카드 받기";
-            this.btnNew.UseVisualStyleBackColor = true;
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
-            // 
-            // lblLineNumber
-            // 
-            this.lblLineNumber.AutoSize = true;
-            this.lblLineNumber.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblLineNumber.Location = new System.Drawing.Point(550, 90);
-            this.lblLineNumber.Name = "lblLineNumber";
-            this.lblLineNumber.Size = new System.Drawing.Size(19, 18);
-            this.lblLineNumber.TabIndex = 135;
-            this.lblLineNumber.Text = "5";
-            // 
-            // lblLineNumber2
-            // 
-            this.lblLineNumber2.AutoSize = true;
-            this.lblLineNumber2.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblLineNumber2.Location = new System.Drawing.Point(1110, 93);
-            this.lblLineNumber2.Name = "lblLineNumber2";
-            this.lblLineNumber2.Size = new System.Drawing.Size(30, 18);
-            this.lblLineNumber2.TabIndex = 132;
-            this.lblLineNumber2.Text = "10";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label5.Location = new System.Drawing.Point(469, 30);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(101, 36);
-            this.label5.TabIndex = 136;
-            this.label5.Text = "Move";
             // 
             // difficultyPanel
             // 
@@ -389,17 +282,17 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label1.Location = new System.Drawing.Point(370, 263);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(222, 26);
+            this.label1.Size = new System.Drawing.Size(198, 29);
             this.label1.TabIndex = 127;
             this.label1.Text = "난이도를 선택하세요.";
             this.label1.UseWaitCursor = true;
             // 
             // btnVeryHard
             // 
-            this.btnVeryHard.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnVeryHard.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnVeryHard.Location = new System.Drawing.Point(735, 320);
             this.btnVeryHard.Name = "btnVeryHard";
             this.btnVeryHard.Size = new System.Drawing.Size(158, 69);
@@ -411,7 +304,7 @@
             // 
             // btnHard
             // 
-            this.btnHard.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnHard.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnHard.Location = new System.Drawing.Point(551, 320);
             this.btnHard.Name = "btnHard";
             this.btnHard.Size = new System.Drawing.Size(158, 69);
@@ -423,7 +316,7 @@
             // 
             // btnNormal
             // 
-            this.btnNormal.Font = new System.Drawing.Font("나눔스퀘어라운드 ExtraBold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnNormal.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnNormal.Location = new System.Drawing.Point(349, 320);
             this.btnNormal.Name = "btnNormal";
             this.btnNormal.Size = new System.Drawing.Size(158, 69);
@@ -433,18 +326,26 @@
             this.btnNormal.UseWaitCursor = true;
             this.btnNormal.Click += new System.EventHandler(this.btnNormal_Click);
             // 
+            // lblResult
+            // 
+            this.lblResult.AutoSize = true;
+            this.lblResult.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblResult.Location = new System.Drawing.Point(345, 300);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Size = new System.Drawing.Size(645, 138);
+            this.lblResult.TabIndex = 138;
+            this.lblResult.Text = "You Win!!";
+            this.lblResult.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1282, 723);
+            this.Controls.Add(this.lblResult);
             this.Controls.Add(this.difficultyPanel);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.lblLineNumber);
-            this.Controls.Add(this.lblLineNumber2);
-            this.Controls.Add(this.btnNew);
             this.Controls.Add(this.lblState);
-            this.Controls.Add(this.pbxDealer);
+            this.Controls.Add(this.pbxNewCard);
             this.Controls.Add(this.pictureBox91);
             this.Controls.Add(this.pictureBox81);
             this.Controls.Add(this.pictureBox71);
@@ -454,19 +355,14 @@
             this.Controls.Add(this.pictureBox31);
             this.Controls.Add(this.pictureBox21);
             this.Controls.Add(this.pictureBox11);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label);
-            this.Controls.Add(this.txtRecvLine);
-            this.Controls.Add(this.txtAmount);
-            this.Controls.Add(this.txtSendLine);
             this.Controls.Add(this.lblRemainCardSet);
             this.Controls.Add(this.lblScore);
             this.Controls.Add(this.lblDifficulty);
             this.Controls.Add(this.btnHint);
-            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.imgCard1);
             this.Name = "Form1";
             this.Text = "스파이더 카드 게임";
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.imgCard1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).EndInit();
@@ -477,7 +373,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox71)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox81)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox91)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxDealer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxNewCard)).EndInit();
             this.difficultyPanel.ResumeLayout(false);
             this.difficultyPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -488,16 +384,10 @@
         #endregion
 
         private System.Windows.Forms.PictureBox imgCard1;
-        private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnHint;
         private System.Windows.Forms.Label lblDifficulty;
         private System.Windows.Forms.Label lblScore;
         private System.Windows.Forms.Label lblRemainCardSet;
-        private System.Windows.Forms.TextBox txtSendLine;
-        private System.Windows.Forms.TextBox txtAmount;
-        private System.Windows.Forms.TextBox txtRecvLine;
-        private System.Windows.Forms.Label label;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox11;
         private System.Windows.Forms.PictureBox pictureBox21;
         private System.Windows.Forms.PictureBox pictureBox31;
@@ -507,17 +397,14 @@
         private System.Windows.Forms.PictureBox pictureBox71;
         private System.Windows.Forms.PictureBox pictureBox81;
         private System.Windows.Forms.PictureBox pictureBox91;
-        private System.Windows.Forms.PictureBox pbxDealer;
+        private System.Windows.Forms.PictureBox pbxNewCard;
         private System.Windows.Forms.Label lblState;
-        private System.Windows.Forms.Button btnNew;
-        private System.Windows.Forms.Label lblLineNumber;
-        private System.Windows.Forms.Label lblLineNumber2;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel difficultyPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnVeryHard;
         private System.Windows.Forms.Button btnHard;
         private System.Windows.Forms.Button btnNormal;
+        private System.Windows.Forms.Label lblResult;
     }
 }
 

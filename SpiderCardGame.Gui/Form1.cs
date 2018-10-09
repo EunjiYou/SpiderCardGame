@@ -16,7 +16,7 @@ namespace SpiderCardGame.Gui
     public enum GameState
     {
         None = -1,
-        WrongInput,         //입력값 에러
+        SelectCards,       //클릭하여 카드를 옮기기 시작하는 상태
         TooManyCards,       //옮기는 카드량 오버
         CantTransferCards,  //교환 불가 에러
         DealerIsEmpty,      //딜러 카드 없음
@@ -32,13 +32,13 @@ namespace SpiderCardGame.Gui
     {
         public const int MAX_PICTURE_AMOUNT = 13;
 
-        private static GameState _state = GameState.None;
+        private static GameState state_ = GameState.None;
 
-        Dealer dealer;
-        Score score;
-        Board board;
-        Judge judge;
-        GraphicCard graphicCard;
+        public Dealer dealer;
+        public Score score;
+        public Board board;
+        public Judge judge;
+        public GraphicCard graphicCard;
         
 
         int select = -1;
@@ -58,144 +58,7 @@ namespace SpiderCardGame.Gui
             judge = new Judge(board, dealer);
             graphicCard = new GraphicCard(this);
         }
-
-        private void SetGameDifficulTyAndGameStart(Difficulty difficulty)
-        {
-            lblDifficulty.Text = "난이도 : " + difficulty.ToString();
-            dealer.SetDifficulty(difficulty);
-            //난이도 선택 판넬 닫기
-            difficultyPanel.Visible = false;
-
-            //난이도에 따라 딜러가 셔플
-            dealer.Shuffle();
-            //셔플 후 딜러가 보드에 카드 배분
-            board.InitBoard();
-            //보드 상태 확인(print)
-            PrintBoard(board, score, dealer);
-        }
-
-        // 카드 이동
-        private void btnOK_Click(object sender, EventArgs e)
-        {
-            if (!gameEnd)
-            {
-                if (int.TryParse(txtRecvLine.Text, out recvLine) &&
-                        int.TryParse(txtAmount.Text, out amount) &&
-                        int.TryParse(txtSendLine.Text, out sendLine))
-                {
-                    if (recvLine > 10 || sendLine > 10 || amount < 1) _state = GameState.WrongInput;
-                    else
-                    {
-                        //양의 경우 연속된 만큼만 가능하게 한다.
-                        int chainAmount = board.GetCardChainAmountFromLine(sendLine);
-                        if (amount > chainAmount)
-                        {
-                            _state = GameState.TooManyCards;
-                        }
-                        else
-                        {
-                            if (judge.CanConveyCard(sendLine, amount, recvLine))
-                            {
-                                //카드 옮기기
-                                board.ConveyCardLineToLine(sendLine, amount, recvLine);
-
-                                //옮긴 후 움직임 수 증가 및 스코어 1 감소
-                                score.GiveMovePenalty();
-                                //카드 한 세트가 완성되면
-                                if (judge.LineHasCardSet(recvLine))
-                                {
-                                    score.GiveOneCardSetScore();
-                                    board.RemoveOneCardSet(recvLine);
-                                }
-                            }
-                            else
-                                _state = GameState.CantTransferCards;
-
-                        }
-                    }
-                }
-                else
-                    _state = GameState.WrongInput;
-
-                if (judge.BoardIsEmpty())
-                {
-                    _state = GameState.Win;
-                    gameEnd = true;
-                    DisableGameBoard();
-                }
-                else if (score.IsGameOver())
-                {
-                    _state = GameState.GameOver;
-                    gameEnd = true;
-                    DisableGameBoard();
-                }
-                //보드 상태 확인(print)
-                PrintBoard(board, score, dealer); 
-            }
-        }
-
-
-        //힌트 제공
-        private void btnHint_Click(object sender, EventArgs e)
-        {
-            if (!gameEnd)
-            {
-                //힌트를 줄 수 있는 상황이라면 힌트 주기
-                if (judge.CanGiveHint())
-                {
-                    score.GiveHintPenalty();
-                    _state = GameState.Hint;
-                }
-                else //아닐 경우
-                {
-                    //딜러가 카드를 줄 수 있다면 새 카드 받기 권유
-                    if (dealer.CanPlayCard())
-                        _state = GameState.GetNewCard;
-                    else
-                    {
-                        for (int i = 1; i <= board.boardLines.Count; i++)
-                        {
-                            if (board.LineIsEmpty(i))
-                            {
-                                _state = GameState.NoMoreHint;
-                            }
-                            else
-                            {
-                                _state = GameState.GameOver;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (score.IsGameOver())
-                {
-                    _state = GameState.GameOver;
-                    gameEnd = true;
-                    DisableGameBoard();
-                }
-
-                //보드 상태 확인(print)
-                PrintBoard(board, score, dealer); 
-            }
-        }
         
-        // 카드 새로받기
-        private void btnNew_Click(object sender, EventArgs e)
-        {
-            //딜러에게 카드가 있고 보드에 카드가 빈 줄이 하나도 없을 경우에만
-            if (!dealer.CanPlayCard())
-                _state = GameState.DealerIsEmpty;
-            else if (!board.LinesAreNotEmpty())
-                _state = GameState.BoardLineIsEmpty;
-            else
-                //보드의 모든 줄에 카드 열 장씩 배부
-                board.ConveyCardToAllLine();
-
-            //보드 상태 확인(print)
-            PrintBoard(board, score, dealer);
-        }
-
         // 난이도 노말로 설정
         private void btnNormal_Click(object sender, EventArgs e)
         {
@@ -214,6 +77,119 @@ namespace SpiderCardGame.Gui
             SetGameDifficulTyAndGameStart(Difficulty.VerryHard);
         }
 
+
+        //힌트 제공
+        private void btnHint_Click(object sender, EventArgs e)
+        {
+            if (!gameEnd)
+            {
+                //힌트를 줄 수 있는 상황이라면 힌트 주기
+                if (judge.CanGiveHint())
+                {
+                    score.GiveHintPenalty();
+                    state_ = GameState.Hint;
+                }
+                else //아닐 경우
+                {
+                    //딜러가 카드를 줄 수 있다면 새 카드 받기 권유
+                    if (dealer.CanPlayCard())
+                        state_ = GameState.GetNewCard;
+                    else
+                    {
+                        for (int i = 1; i <= board.boardLines.Count; i++)
+                        {
+                            if (board.LineIsEmpty(i))
+                            {
+                                state_ = GameState.NoMoreHint;
+                            }
+                            else
+                            {
+                                state_ = GameState.GameOver;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (score.IsGameOver())
+                {
+                    state_ = GameState.GameOver;
+                    gameEnd = true;
+                    DisableGameBoard();
+                }
+
+                //보드 상태 확인(print)
+                PrintBoard(board, score, dealer); 
+            }
+        }
+        
+        // 카드 새로받기
+        private void pbxNewCard_Click(object sender, EventArgs e)
+        {
+            //딜러에게 카드가 있고 보드에 카드가 빈 줄이 하나도 없을 경우에만
+            if (!dealer.CanPlayCard())
+                state_ = GameState.DealerIsEmpty;
+            else if (!board.LinesAreNotEmpty())
+                state_ = GameState.BoardLineIsEmpty;
+            else
+                //보드의 모든 줄에 카드 열 장씩 배부
+                board.ConveyCardToAllLine();
+
+            //보드 상태 확인(print)
+            PrintBoard(board, score, dealer);
+        }
+        
+        // 마우스를 움직일 경우의 이벤트
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            graphicCard.MouseMoveEvent(sender, e);
+        }
+
+
+        // 난이도 설정 후 게임 시작
+        private void SetGameDifficulTyAndGameStart(Difficulty difficulty)
+        {
+            lblDifficulty.Text = "난이도 : " + difficulty.ToString();
+            dealer.SetDifficulty(difficulty);
+            //난이도 선택 판넬 닫기
+            difficultyPanel.Visible = false;
+
+            //난이도에 따라 딜러가 셔플
+            dealer.Shuffle();
+            //셔플 후 딜러가 보드에 카드 배분
+            board.InitBoard();
+            //보드 상태 확인(print)
+            PrintBoard(board, score, dealer);
+        }
+        
+        // 게임 상태 변환
+        public void SetGameState(GameState state)
+        {
+            state_ = state;
+        }
+
+        // 게임이 끝났는지 확인
+        public void CheckGameEnd()
+        {
+            if (judge.BoardIsEmpty())
+            {
+                state_ = GameState.Win;
+                
+            }
+            else if (score.IsGameOver())
+            {
+                state_ = GameState.GameOver;
+            }
+            else return;
+
+            gameEnd = true;
+            DisableGameBoard();
+        }
+        
+        public void PrintBoard()
+        {
+            PrintBoard(board, score, dealer);
+        }
 
         //보드의 상태 프린트
         private void PrintBoard(Board board, Score score, Dealer dealer)
@@ -253,7 +229,7 @@ namespace SpiderCardGame.Gui
             lblScore.Text = $" 점수 : {score.Scores}";
 
             string state = "";
-            switch (_state)
+            switch (state_)
             {
                 case GameState.DealerIsEmpty:
                     state = "더이상 카드를 줄 수 없습니다";
@@ -264,57 +240,40 @@ namespace SpiderCardGame.Gui
                 case GameState.GetNewCard:
                     state = "새 카드를 받아오세요";
                     break;
+                case GameState.Hint:
+                    state = $"{board.hintLines[0].ToString()}번 줄에서 {board.hintLines[1].ToString()}번으로 옮길 수 있습니다";
+                    break;
                 case GameState.NoMoreHint:
                     state = "힌트를 줄 수 없습니다";
                     break;
                 case GameState.CantTransferCards:
                     state = "카드를 교환할 수 없습니다";
                     break;
-                case GameState.WrongInput:
-                    state = "잘못된 입력입니다";
-                    break;
                 case GameState.TooManyCards:
                     state = "그만큼 보낼 수 없습니다";
                     break;
-                case GameState.Win:
-                    state = "You Win!";
-                    break;
                 case GameState.GameOver:
-                    state = "You Lose ㅠㅠ";
+                    state = "You lose ㅠㅠ";
                     break;
                 befault:
                     state = "";
                     break;
             }
             lblState.Text = state;
-
-            if (_state == GameState.Hint)
-            {
-                txtSendLine.Text = board.hintLines[0].ToString();
-                txtRecvLine.Text = board.hintLines[1].ToString();
-                txtAmount.Text = board.GetCardChainAmountFromLine(board.hintLines[0]).ToString();
-            }
-            else
-            {
-                txtAmount.Text = "";
-                txtSendLine.Text = "";
-                txtRecvLine.Text = "";
-            }
+            
 
             if (!dealer.CanPlayCard())
-                pbxDealer.Visible = false;
+                pbxNewCard.Visible = false;
 
-            _state = GameState.None;
+            state_ = GameState.None;
         }
         
-        
+        // 게임이 끝나고 버튼 비활성화
         private void DisableGameBoard()
         {
-            btnOK.Enabled = false;
             btnHint.Enabled = false;
-            btnNew.Enabled = false;
-            lblLineNumber.Text = "";
-            lblLineNumber2.Text = "";
+            if(state_ == GameState.Win)
+                lblResult.Visible = true;
         }
     }
 }
