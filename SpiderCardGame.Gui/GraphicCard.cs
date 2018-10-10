@@ -74,60 +74,23 @@ namespace SpiderCardGame.Gui
             //var boxes = Controls.AsQueryable().OfType<PictureBox>().Where(x => x.Location.X > 100 && x.Location.X < 200);
         }
         
+        // 마우스를 클릭할 경우 생성되는 이벤트
+        private void MouseClickEvent(object sender, MouseEventArgs e)
+        {
+            if (!_form1.gameEnd)
+            {
+                // 현재 상태에 따라 다른 이벤트 발생
+                if (state_ == SelectState.Select)
+                    MouseUpEvent(sender, e);
+                else
+                    MouseDownEvent(sender, e);
+
+                // 게임 상황 갱신
+                _form1.PrintBoard();
+            }
+        }
 
         
-        // 카드들을 보내려고 선택할 때의 클릭 이벤트
-        private void MouseDownEvent(object sender, MouseEventArgs e)
-        {
-            // 이벤트가 벌어진 카드 이미지로부터 해당 라인과 가져갈 카드의 장수를 파악
-            PictureBox pb = (PictureBox)sender;
-            string tag = pb.Tag.ToString();
-            string[] tags = tag.Split(',');
-            _selectLine = int.Parse(tags[0]);
-            int count = _form1.board.boardLines[_selectLine - 1].Count;
-            count = count >= 13 ? 13 : count;
-            int num = int.Parse(tags[1]);
-            int chainedAmount = _form1.board.GetCardChainAmountFromLine(_selectLine);
-
-            // 해당 라인의 연쇄된 카드량 범위 내에서 카드를 선택했다면
-            if (num >= count - chainedAmount)
-            {
-                // 될 경우 카드는 클릭한 범위부터 끝까지로 리스트로 묶어둠 
-                while(num < count && num < 13)
-                {
-                    PictureBox p = curCards[_selectLine - 1][num++];
-                    _selectedPics.Add(p);
-                    p.BringToFront();
-                }
-                // 카드를 선택한 상태로 만듦 
-                state_ = SelectState.Select;
-                
-                //mouseXInterval = e.X;
-                //mouseYInterval = e.Y;
-            }
-            // 예외라면 카드 들고가기 불가
-            else
-            {
-                state_ = SelectState.Cancled;
-                _form1.SetGameState(GameState.TooManyCards);
-            }
-        }
-
-        // 마우스가 움직일 때마다 발생하는 이벤트
-        public void MouseMoveEvent(object sender, MouseEventArgs e)
-        {
-            //카드들을 선택한 상황에서만
-            if (state_ == SelectState.Select)
-            {
-                // 선택한 PictureBox 리스트의 요소들이 현재 마우스 위치로 이동
-                for (int i = 0; i < _selectedPics.Count; i++)
-                {
-                    Point pos = new Point(e.X, e.Y + (i * VER_INTERVAL));
-                    _selectedPics[i].Location = pos;
-                } 
-            }
-        }
-
         // 카드를 보내기 위해 보낼 라인을 클릭할 경우의 이벤트
         public void MouseUpEvent(object sender, MouseEventArgs e)
         {
@@ -197,20 +160,60 @@ namespace SpiderCardGame.Gui
             _selectedPics.Clear();
         }
         
-        // 마우스를 클릭할 경우 생성되는 이벤트
-        private void MouseClickEvent(object sender, MouseEventArgs e)
-        {
-            // 현재 상태에 따라 다른 이벤트 발생
-            if (state_ == SelectState.Select)
-                MouseUpEvent(sender, e);
-            else
-                MouseDownEvent(sender, e);
 
-            // 게임 상황 갱신
-            _form1.PrintBoard();
+        // 카드들을 보내려고 선택할 때의 클릭 이벤트
+        private void MouseDownEvent(object sender, MouseEventArgs e)
+        {
+            // 이벤트가 벌어진 카드 이미지로부터 해당 라인과 가져갈 카드의 장수를 파악
+            PictureBox pb = (PictureBox)sender;
+            string tag = pb.Tag.ToString();
+            string[] tags = tag.Split(',');
+            _selectLine = int.Parse(tags[0]);
+            int count = _form1.board.boardLines[_selectLine - 1].Count;
+            count = count >= 13 ? 13 : count;
+            int num = int.Parse(tags[1]);
+            int chainedAmount = _form1.board.GetCardChainAmountFromLine(_selectLine);
+
+            // 해당 라인의 연쇄된 카드량 범위 내에서 카드를 선택했다면
+            if (num >= count - chainedAmount)
+            {
+                // 될 경우 카드는 클릭한 범위부터 끝까지로 리스트로 묶어둠 
+                while(num < count && num < 13)
+                {
+                    PictureBox p = curCards[_selectLine - 1][num++];
+                    _selectedPics.Add(p);
+                    p.BringToFront();
+                }
+                // 카드를 선택한 상태로 만듦 
+                state_ = SelectState.Select;
+                
+                //mouseXInterval = e.X;
+                //mouseYInterval = e.Y;
+            }
+            // 예외라면 카드 들고가기 불가
+            else
+            {
+                state_ = SelectState.Cancled;
+                _form1.SetGameState(GameState.TooManyCards);
+            }
         }
 
-        
+
+        // 마우스가 움직일 때마다 발생하는 이벤트
+        public void MouseMoveEvent(object sender, MouseEventArgs e)
+        {
+            //카드들을 선택한 상황에서만
+            if (state_ == SelectState.Select)
+            {
+                // 선택한 PictureBox 리스트의 요소들이 현재 마우스 위치로 이동
+                for (int i = 0; i < _selectedPics.Count; i++)
+                {
+                    Point pos = new Point(e.X, e.Y + (i * VER_INTERVAL));
+                    _selectedPics[i].Location = pos;
+                } 
+            }
+        }
+
 
         private int LocationXOf(int line)
         {

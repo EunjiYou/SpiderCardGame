@@ -47,7 +47,7 @@ namespace SpiderCardGame.Gui
         int recvLine = -1;
         int amount = -1;
 
-        private bool gameEnd = false;
+        public bool gameEnd = false;
         
         public Form1()
         {
@@ -105,7 +105,7 @@ namespace SpiderCardGame.Gui
                             }
                             else
                             {
-                                state_ = GameState.GameOver;
+                                SetGameOver();
                                 break;
                             }
                         }
@@ -114,9 +114,7 @@ namespace SpiderCardGame.Gui
 
                 if (score.IsGameOver())
                 {
-                    state_ = GameState.GameOver;
-                    gameEnd = true;
-                    DisableGameBoard();
+                    SetGameOver();
                 }
 
                 
@@ -188,7 +186,16 @@ namespace SpiderCardGame.Gui
             gameEnd = true;
             DisableGameBoard();
         }
-        
+
+        // 게임오버 판정
+        public void SetGameOver()
+        {
+            state_ = GameState.GameOver;
+            gameEnd = true;
+            DisableGameBoard();
+        }
+
+
         public void PrintBoard()
         {
             PrintBoard(board, score, dealer);
@@ -267,8 +274,9 @@ namespace SpiderCardGame.Gui
 
             if (!dealer.CanPlayCard())
                 pbxNewCard.Visible = false;
-
-            state_ = GameState.None;
+            
+            if(state_ != GameState.GameOver)
+                state_ = GameState.None;
         }
         
         // 게임이 끝나고 버튼 비활성화
