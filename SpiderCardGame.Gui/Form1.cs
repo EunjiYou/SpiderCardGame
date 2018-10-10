@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -118,10 +119,12 @@ namespace SpiderCardGame.Gui
                     DisableGameBoard();
                 }
 
+                
                 //보드 상태 확인(print)
                 PrintBoard(board, score, dealer); 
             }
         }
+        
         
         // 카드 새로받기
         private void pbxNewCard_Click(object sender, EventArgs e)

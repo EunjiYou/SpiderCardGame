@@ -16,12 +16,15 @@ namespace SpiderCardGame
         Hint,
         GetNewCard,
         NoMoreHint,
+        Win,
         GameOver
     }
+
 
     class Program
     {
         private static GameState _state = GameState.None;
+        static bool gameEnd = false;
 
         static void Main(string[] args)
         {
@@ -71,7 +74,7 @@ namespace SpiderCardGame
             int recvLine = -1;
             int amount = -1;
             //보드에 카드가 남아있는 동안 
-            while (!judge.BoardIsEmpty() || !score.IsGameOver())
+            while (!gameEnd && _state != GameState.GameOver)
             {
                 //보드 상태 확인(print)
                 PrintBoard(board, score, dealer);
@@ -178,6 +181,7 @@ namespace SpiderCardGame
                     {
                         board.RemoveOneCardSet(recvLine);
                         score.GiveOneCardSetScore();
+                        CheckGameEnd(judge, score);
                     }
                 }
                 //새로 받을 경우
@@ -229,8 +233,6 @@ namespace SpiderCardGame
 
             //게임 상태 프린트
             PrintBoard(board, score, dealer);
-            //게임이 끝나면 점수 표시
-            PrintResult(score);
         }
         
 
@@ -256,7 +258,7 @@ namespace SpiderCardGame
 
             for(int i = 1; i <= board.boardLines.Count; i++)
                 Console.Write($"  {i}\t");
-            Console.WriteLine($" 남은 카드 세트 : {dealer.cards.Count / Dealer.MAX_CARD_NUMBER}");
+            Console.WriteLine($" 남은 카드 세트 : {(dealer.cards.Count / Dealer.MAX_CARD_NUMBER) - score.CardSetCount}");
 
             for (int i = 1; i <= board.boardLines.Count; i++) Console.Write("\t");
             Console.WriteLine($" 완성한 카드 세트 :{score.CardSetCount}");
@@ -283,21 +285,33 @@ namespace SpiderCardGame
                 case GameState.NoMoreHint:
                     Console.WriteLine("힌트를 줄 수 없습니다.");
                     break;
+                case GameState.Win:
+                    Console.WriteLine("You Win!");
+                    break;
+                case GameState.GameOver:
+                    Console.WriteLine("You lose...");
+                    break;
             }
-            _state = GameState.None;
+
+                _state = GameState.None;
             Console.WriteLine();
         }
 
-        private static void PrintResult(Score score)
+        // 게임이 끝났는지 확인
+        static void CheckGameEnd(Judge judge, Score score)
         {
-            if (score.IsGameOver() || _state == GameState.GameOver)
+            if (judge.BoardIsEmpty())
             {
-                Console.WriteLine("You Lose...");
+                _state = GameState.Win;
+                
             }
-            else
+            else if (score.IsGameOver())
             {
-                Console.WriteLine("You Win!");
+                _state = GameState.GameOver;
             }
+            else return;
+
+            gameEnd = true;
         }
     }
 }
