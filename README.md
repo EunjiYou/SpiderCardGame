@@ -16,12 +16,13 @@ Solitaire(카드게임)에서 가장 즐겨하는 스파이더 카드 게임을 
 # 게임 스크린샷
 1. Console UI
 
-![image](https://user-images.githubusercontent.com/25303946/47334228-21dd8d00-d6c1-11e8-8b33-518bd7d265dd.png)
-![image](https://user-images.githubusercontent.com/25303946/47336273-01660080-d6ca-11e8-8522-8549b2af8e98.png)
-![image](https://user-images.githubusercontent.com/25303946/47336283-0b87ff00-d6ca-11e8-8bd7-7d06551b6d41.png)
+![1](https://user-images.githubusercontent.com/25303946/47336394-84875680-d6ca-11e8-8b7f-2a23a31262a9.png)
+![2](https://user-images.githubusercontent.com/25303946/47336396-88b37400-d6ca-11e8-810b-e1f70df2a721.png)
+![3](https://user-images.githubusercontent.com/25303946/47336400-8c46fb00-d6ca-11e8-8e28-97eaed774291.png)
 
 2. WinForm UI
 
-![image](https://user-images.githubusercontent.com/25303946/47336306-2195bf80-d6ca-11e8-9676-37afddf39f3b.png)
-![image](https://user-images.githubusercontent.com/25303946/47336315-29edfa80-d6ca-11e8-9007-df27e8f8fa51.png)
-![image](https://user-images.githubusercontent.com/25303946/47336325-32463580-d6ca-11e8-8d69-f9170c650e74.png)
+![4](https://user-images.githubusercontent.com/25303946/47336405-8ea95500-d6ca-11e8-8533-395bb361813d.png)
+![5](https://user-images.githubusercontent.com/25303946/47336407-92d57280-d6ca-11e8-9231-84e3ef58673e.png)
+![6](https://user-images.githubusercontent.com/25303946/47336412-949f3600-d6ca-11e8-9cd9-284bce8c438a.png)
+
