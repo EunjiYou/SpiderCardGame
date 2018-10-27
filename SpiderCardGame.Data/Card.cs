@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace SpiderCardGame.Data
 {
+    //public enum Pattern
+    //{
+    //    None = -1,
+    //    Spade,
+    //    Clover,
+    //    Diamond,
+    //    Heart,
+    //}
+
     public class Card
     {
         public enum Pattern

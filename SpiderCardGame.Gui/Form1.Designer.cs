@@ -329,10 +329,10 @@
             // lblResult
             // 
             this.lblResult.AutoSize = true;
-            this.lblResult.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblResult.Location = new System.Drawing.Point(345, 300);
             this.lblResult.Name = "lblResult";
-            this.lblResult.Size = new System.Drawing.Size(645, 138);
+            this.lblResult.Size = new System.Drawing.Size(585, 135);
             this.lblResult.TabIndex = 138;
             this.lblResult.Text = "You Win!!";
             this.lblResult.Visible = false;
@@ -342,9 +342,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1282, 723);
-            this.Controls.Add(this.lblResult);
             this.Controls.Add(this.difficultyPanel);
             this.Controls.Add(this.lblState);
+            this.Controls.Add(this.lblResult);
             this.Controls.Add(this.pbxNewCard);
             this.Controls.Add(this.pictureBox91);
             this.Controls.Add(this.pictureBox81);
