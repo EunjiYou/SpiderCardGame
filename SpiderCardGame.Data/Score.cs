@@ -19,20 +19,20 @@ namespace SpiderCardGame.Data
         }
 
         // 카드를 움직였을 경우 이동수 증가와 스코어 감소
-        public void GiveMovePenalty()
+        public void GetMovePenalty()
         {
             Scores--;
             MoveCount++;
         }
 
         // 힌트를 받을 경우 스코어 감소
-        public void GiveHintPenalty()
+        public void GetHintPenalty()
         {
             Scores--;
         }
 
         // 한 카드세트를 완성시켰을 경우 스코어 증가 및 완성된 카드세트 증가 
-        public void GiveOneCardSetScore()
+        public void GetOneCardSetScore()
         {
             CardSetCount++;
             Scores += 100;

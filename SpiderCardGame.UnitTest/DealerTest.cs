@@ -9,7 +9,7 @@ namespace SpiderCardGame.UnitTest
     public class DealerTest
     {
         [TestMethod]
-        public void ShuffleAllCards()
+        public void ShuffleTest()
         {
             Dealer dealer = new Dealer();
             dealer.Shuffle();
@@ -20,7 +20,7 @@ namespace SpiderCardGame.UnitTest
         }
 
         [TestMethod]
-        public void SetDifficultyOfGames()
+        public void SetDifficultyTest()
         {
             Dealer dealer = new Dealer();
             Difficulty difficulty = Difficulty.VerryHard;
@@ -30,7 +30,7 @@ namespace SpiderCardGame.UnitTest
         }
 
         [TestMethod]
-        public void GetCardFromDealer()
+        public void PlayCardTest()
         {
             Dealer dealer = new Dealer();
             dealer.Shuffle();
@@ -41,6 +41,26 @@ namespace SpiderCardGame.UnitTest
             Assert.AreEqual(card, dealer.cards[0]);
             Assert.AreEqual(card2, dealer.cards[1]);
             Assert.AreEqual(card3, dealer.cards[2]);
+        }
+
+        [TestMethod]
+        public void CanPlayCardTest()
+        {
+            Dealer dealer = new Dealer();
+            dealer.Shuffle();
+            bool canPlayCard = dealer.CanPlayCard();
+
+            int maxCardNum = Dealer.MAX_CARD_NUMBER * Dealer.MAX_CARD_SET * Dealer.MAX_TRUMPCARD_SET;
+
+            for (int i = 0; i < maxCardNum; i++)
+            {
+                dealer.PlayCard();
+            }
+
+            bool cantPlayCard = dealer.CanPlayCard();
+
+            Assert.AreEqual(canPlayCard, true);
+            Assert.AreEqual(cantPlayCard, false);
         }
     }
 }

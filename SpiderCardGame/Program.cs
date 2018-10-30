@@ -148,7 +148,7 @@ namespace SpiderCardGame
                     //옮길 위치 선택
                     while (true)
                     {
-                        Console.Write("선택한 카드를 옮길 라인을 선택하세요 (1~10 / 0:취소) ");
+                        Console.Write("선택한 카드를 들어가게 될 라인을 선택하세요 (1~10 / 0:취소) ");
                         try
                         {
                             recvLine = int.Parse(Console.ReadLine());
@@ -175,12 +175,12 @@ namespace SpiderCardGame
                     board.ConveyCardLineToLine(sendLine, select, recvLine);
 
                     //옮긴 후 움직임 수 증가 및 스코어 1 감소
-                    score.GiveMovePenalty();
+                    score.GetMovePenalty();
                     //카드 한 세트가 완성되면
                     if(judge.LineHasCardSet(recvLine))
                     {
                         board.RemoveOneCardSet(recvLine);
-                        score.GiveOneCardSetScore();
+                        score.GetOneCardSetScore();
                         CheckGameEnd(judge, score);
                     }
                 }
@@ -203,7 +203,7 @@ namespace SpiderCardGame
                     //힌트를 줄 수 있는 상황이라면 힌트 주기
                     if (judge.CanGiveHint())
                     {
-                        score.GiveHintPenalty();
+                        score.GetHintPenalty();
                         _state = GameState.Hint;
                     }
                     else //아닐 경우

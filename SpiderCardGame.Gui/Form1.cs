@@ -87,7 +87,7 @@ namespace SpiderCardGame.Gui
                 //힌트를 줄 수 있는 상황이라면 힌트 주기
                 if (judge.CanGiveHint())
                 {
-                    score.GiveHintPenalty();
+                    score.GetHintPenalty();
                     state_ = GameState.Hint;
                 }
                 else //아닐 경우

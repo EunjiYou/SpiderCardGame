@@ -361,7 +361,7 @@
             this.Controls.Add(this.btnHint);
             this.Controls.Add(this.imgCard1);
             this.Name = "Form1";
-            this.Text = "스파이더 카드 게임";
+            this.Text = "스파이더 카드게임";
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.imgCard1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();

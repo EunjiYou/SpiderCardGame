@@ -109,11 +109,11 @@ namespace SpiderCardGame.Gui
                         _form1.board.ConveyCardLineToLine(_selectLine, _selectedPics.Count, line);
                         
                         //옮긴 후 움직임 수 증가 및 스코어 1 감소
-                        _form1.score.GiveMovePenalty();
+                        _form1.score.GetMovePenalty();
                         //카드 한 세트가 완성되면
                         if (_form1.judge.LineHasCardSet(line))
                         {
-                            _form1.score.GiveOneCardSetScore();
+                            _form1.score.GetOneCardSetScore();
                             _form1.board.RemoveOneCardSet(line);
                         }
 
