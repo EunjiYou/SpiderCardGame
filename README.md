@@ -9,9 +9,9 @@ Solitaire(카드게임)에서 가장 즐겨하는 스파이더 카드 게임을 
 <br/><br/><br/>
 
 # 주요 특징
-1. 클래스 라이브러리를 사용하여 Console 프로젝트에서 WinForm 프로젝트 두 환경에서 쉽게 게임을 구현
-2. 기존 스파이더 카드게임의 드래그 방식을 Mouse Event를 활용하여 Winform에서 구현
-3. Class에 대한 UnitTest 실시
+- 클래스 라이브러리를 사용하여 Console 프로젝트에서 WinForm 프로젝트 두 환경에서 쉽게 게임을 구현
+- 기존 스파이더 카드게임의 드래그 방식을 Mouse Event를 활용하여 Winform에서 구현
+- Class에 대한 UnitTest 실시
 <br/><br/><br/>
 
 # 게임 스크린샷
